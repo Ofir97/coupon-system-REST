@@ -10,8 +10,10 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 
 import com.ofir.coupons.annotations.LogOperation;
+import com.ofir.coupons.authorization.TokenManager;
 import com.ofir.coupons.beans.Company;
 import com.ofir.coupons.beans.Coupon;
+import com.ofir.coupons.custom_exception.AuthorizationException;
 import com.ofir.coupons.custom_exception.CouponSystemException;
 import com.ofir.coupons.enums.Category;
 import com.ofir.coupons.enums.ErrorMessage;
@@ -26,9 +28,9 @@ public class CompanyService extends ClientService {
 	private int companyID; // represents the company id that logged in
 
 	@Autowired
-	public CompanyService(CompaniesRepository companiesRepository,
-			CustomersRepository customersRepository, CouponsRepository couponsRepository) {
-		super(companiesRepository, customersRepository, couponsRepository);
+	public CompanyService(CompaniesRepository companiesRepository, CustomersRepository customersRepository,
+			CouponsRepository couponsRepository, TokenManager tokenManager) {
+		super(companiesRepository, customersRepository, couponsRepository, tokenManager);
 	}
 
 	/**
@@ -36,15 +38,21 @@ public class CompanyService extends ClientService {
 	 * @param password - the company's password
 	 * @return true if the email and password exist in companies table, otherwise
 	 *         false
+	 * @throws AuthorizationException
 	 */
 	@Override
-	public boolean login(String email, String password) {
+	public String login(String email, String password) throws AuthorizationException {
 		Company company = companiesRepository.findByEmailAndPassword(email, password);
-		if (company != null) { // if company exists
-			companyID = company.getId(); // sets company id to the company id that logged in.
-			return true;
-		}
-		return false;
+		if (company == null) 
+			throw new AuthorizationException(ErrorMessage.BAD_LOGIN);
+		
+		companyID = company.getId(); //sets customer id to the customer id that logged in.
+        
+        return company.getName();
+	}
+
+	public void logout(String token) {
+		tokenManager.removeToken(token);
 	}
 
 	/**
@@ -61,7 +69,7 @@ public class CompanyService extends ClientService {
 	public Integer addCoupon(Coupon coupon) throws IOException, CouponSystemException {
 		if (coupon.getStartDate().after(coupon.getEndDate()))
 			throw new CouponSystemException(ErrorMessage.INVALID_DATES);
-		
+
 		// if coupon title already exists in the coupons of the company that logged in
 		if (couponsRepository.existsByCompanyIdAndTitle(companyID, coupon.getTitle()))
 			throw new CouponSystemException(ErrorMessage.COUPON_TITLE_EXISTS);
@@ -88,13 +96,17 @@ public class CompanyService extends ClientService {
 	public void updateCoupon(Coupon updatedCoupon) throws IOException, CouponSystemException {
 		if (updatedCoupon.getStartDate().after(updatedCoupon.getEndDate()))
 			throw new CouponSystemException(ErrorMessage.INVALID_DATES);
-		
+
 		// getting the coupon that needs to be updated from DB.
 		Coupon coupon = couponsRepository.findById(updatedCoupon.getId());
 
 		// if coupon does not exist or does not belong to the company that logged in
 		if (coupon == null || coupon.getCompany().getId() != companyID)
 			throw new CouponSystemException(ErrorMessage.COUPON_NOT_FOUND);
+		
+		if (!coupon.getTitle().equals(updatedCoupon.getTitle())
+				&& couponsRepository.existsByCompanyIdAndTitle(companyID, updatedCoupon.getTitle()))
+			throw new CouponSystemException(ErrorMessage.COUPON_TITLE_EXISTS);
 
 		// setting company object of the company that logged in to updatedCoupon.
 		updatedCoupon.setCompany(companiesRepository.findById(companyID).orElse(null));
@@ -158,7 +170,7 @@ public class CompanyService extends ClientService {
 		Company company = companiesRepository.findById(companyID).orElse(null);
 		return company;
 	}
-	
+
 	public Coupon getOneCoupon(int couponId) {
 		return couponsRepository.findByIdAndCompanyId(couponId, companyID);
 	}

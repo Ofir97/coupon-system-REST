@@ -8,8 +8,10 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 
 import com.ofir.coupons.annotations.LogOperation;
+import com.ofir.coupons.authorization.TokenManager;
 import com.ofir.coupons.beans.Company;
 import com.ofir.coupons.beans.Customer;
+import com.ofir.coupons.custom_exception.AuthorizationException;
 import com.ofir.coupons.custom_exception.CouponSystemException;
 import com.ofir.coupons.enums.ErrorMessage;
 import com.ofir.coupons.repositories.CompaniesRepository;
@@ -22,26 +24,31 @@ public class AdminService extends ClientService {
 
 	@Autowired
 	public AdminService(CompaniesRepository companiesRepository, CustomersRepository customersRepository,
-			CouponsRepository couponsRepository) {
-		super(companiesRepository, customersRepository, couponsRepository);
+			CouponsRepository couponsRepository, TokenManager tokenManager) {
+		super(companiesRepository, customersRepository, couponsRepository, tokenManager);
 	}
 
 	@Override
-	public boolean login(String email, String password) {
-		return (email.equals("admin@admin.com") && password.equals("admin"));
+	public String login(String email, String password) throws AuthorizationException {
+		if (!(email.equals("admin@admin.com") && password.equals("admin")))
+			throw new AuthorizationException(ErrorMessage.BAD_LOGIN);
+
+		return "Admin";
+	}
+
+	public void logout(String token) {
+		tokenManager.removeToken(token);
 	}
 
 	/**
 	 * @param company is the company object to be added to DB
 	 * 
 	 * @throws IOException
-	 * @throws CouponSystemException 
+	 * @throws CouponSystemException
 	 */
-	
+
 	@LogOperation(msg = "company added successfully")
 	public Integer addCompany(Company company) throws IOException, CouponSystemException {
-//		ValidationUtils.validateCompanyInput(company);
-		
 		// if company name or email already exists in DB:
 		if (companiesRepository.existsByNameOrEmail(company.getName(), company.getEmail()))
 			throw new CouponSystemException(ErrorMessage.COMPANY_NAME_OR_EMAIL_EXISTS);
@@ -59,8 +66,6 @@ public class AdminService extends ClientService {
 	 */
 	@LogOperation(msg = "company updated successfully")
 	public void updateCompany(Company updatedCompany) throws IOException, CouponSystemException {
-//		ValidationUtils.validateCompanyInput(updatedCompany);
-		
 		// if company does not exist -
 		if (!(updatedCompany.getId() > 0 && companiesRepository.existsById(updatedCompany.getId())))
 			throw new CouponSystemException(ErrorMessage.COMPANY_NOT_FOUND);
@@ -71,6 +76,10 @@ public class AdminService extends ClientService {
 		if (!company.getName().equals(updatedCompany.getName()))
 			throw new CouponSystemException(ErrorMessage.COMPANY_NAME_UPDATED);
 
+		if (!company.getEmail().equals(updatedCompany.getEmail())
+				&& companiesRepository.existsByEmail(updatedCompany.getEmail()))
+			throw new CouponSystemException(ErrorMessage.COMPANY_EMAIL_EXISTS);
+
 		companiesRepository.save(updatedCompany);
 	}
 
@@ -80,14 +89,14 @@ public class AdminService extends ClientService {
 	 * delete = cascade for company_id_fk - customers_vs_coupons: on delete =
 	 * cascade for coupon_id_fk
 	 * 
-	 * @param  companyID is the id of the company to be deleted from DB
+	 * @param companyID is the id of the company to be deleted from DB
 	 * @throws IOException
-	 * @throws CouponSystemException 
+	 * @throws CouponSystemException
 	 */
 	@LogOperation(msg = "company deleted successfully")
 	public void deleteCompany(int companyID) throws IOException, CouponSystemException {
 		// if company does not exist
-		if (!(companyID > 0 && companiesRepository.existsById(companyID))) 
+		if (!(companyID > 0 && companiesRepository.existsById(companyID)))
 			throw new CouponSystemException(ErrorMessage.COMPANY_NOT_FOUND);
 
 		companiesRepository.deleteById(companyID);
@@ -117,12 +126,10 @@ public class AdminService extends ClientService {
 	/**
 	 * @param customer object to be added to DB
 	 * @throws IOException
-	 * @throws CouponSystemException 
+	 * @throws CouponSystemException
 	 */
 	@LogOperation(msg = "customer added successfully")
 	public Integer addCustomer(Customer customer) throws IOException, CouponSystemException {
-//		ValidationUtils.validateCustomerInput(customer);
-		
 		// if customer email already exists in DB
 		if (customersRepository.existsByEmail(customer.getEmail()))
 			throw new CouponSystemException(ErrorMessage.CUSTOMER_EMAIL_EXISTS);
@@ -137,18 +144,21 @@ public class AdminService extends ClientService {
 	 * 
 	 * @param customer object to be updated in DB
 	 * @throws IOException
-	 * @throws CouponSystemException 
+	 * @throws CouponSystemException
 	 */
 	@LogOperation(msg = "customer updated successfully")
 	public void updateCustomer(Customer updatedCustomer) throws IOException, CouponSystemException {
-//		ValidationUtils.validateCustomerInput(updatedCustomer);
-		
 		// if customer does not exist in DB
-		if (!(updatedCustomer.getId() > 0 && customersRepository.existsById(updatedCustomer.getId()))) 
+		if (!(updatedCustomer.getId() > 0 && customersRepository.existsById(updatedCustomer.getId())))
 			throw new CouponSystemException(ErrorMessage.CUSTOMER_NOT_FOUND);
 
-		// setting the coupons purchased by the customer to updatedCustomer
 		Customer customer = customersRepository.findById(updatedCustomer.getId()).orElse(null);
+		
+		if (!customer.getEmail().equals(updatedCustomer.getEmail())
+				&& customersRepository.existsByEmail(updatedCustomer.getEmail()))
+			throw new CouponSystemException(ErrorMessage.CUSTOMER_EMAIL_EXISTS);
+		
+		// setting the coupons purchased by the customer to updatedCustomer
 		updatedCustomer.setCoupons(customer.getCoupons());
 
 		customersRepository.save(updatedCustomer);
@@ -160,12 +170,12 @@ public class AdminService extends ClientService {
 	 * 
 	 * @param customerID is the id of the customer that is to be removed from DB
 	 * @throws IOException
-	 * @throws CouponSystemException 
+	 * @throws CouponSystemException
 	 */
 	@LogOperation(msg = "customer deleted successfully")
 	public void deleteCustomer(int customerID) throws IOException, CouponSystemException {
 		// if customer does not exist in DB
-		if (!(customerID > 0 && customersRepository.existsById(customerID))) 
+		if (!(customerID > 0 && customersRepository.existsById(customerID)))
 			throw new CouponSystemException(ErrorMessage.CUSTOMER_NOT_FOUND);
 
 		customersRepository.deleteById(customerID);
@@ -182,9 +192,9 @@ public class AdminService extends ClientService {
 	/**
 	 * @param customerID is the id of the customer that exists in DB
 	 * @return customer object with the id that is passes as parameter
-	 * @throws CouponSystemException 
+	 * @throws CouponSystemException
 	 */
-	public Customer getOneCustomer(int customerID) throws CouponSystemException  {
+	public Customer getOneCustomer(int customerID) throws CouponSystemException {
 		Customer customer = customersRepository.findById(customerID).orElse(null);
 		if (customer == null) // if customer does not exist
 			throw new CouponSystemException(ErrorMessage.CUSTOMER_NOT_FOUND);

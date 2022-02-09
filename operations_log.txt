@@ -952,3 +952,175 @@ Wed Jan 12 11:32:46 IST 2022 | coupon updated successfully
 
 Wed Jan 12 11:34:45 IST 2022 | coupon updated successfully
 
+Sat Jan 29 22:55:50 IST 2022 | coupon purchased successfully
+
+Tue Feb 01 23:20:56 IST 2022 | customer updated successfully
+
+Wed Feb 02 14:04:20 IST 2022 | company added successfully
+
+Wed Feb 02 14:08:20 IST 2022 | company added successfully
+
+Wed Feb 02 14:14:21 IST 2022 | company deleted successfully
+
+Wed Feb 02 14:14:28 IST 2022 | company deleted successfully
+
+Wed Feb 02 14:14:34 IST 2022 | company added successfully
+
+Wed Feb 02 14:31:40 IST 2022 | company deleted successfully
+
+Wed Feb 02 14:31:53 IST 2022 | company added successfully
+
+Wed Feb 02 14:32:40 IST 2022 | customer added successfully
+
+Wed Feb 02 16:57:07 IST 2022 | coupon updated successfully
+
+Wed Feb 02 16:59:56 IST 2022 | coupon added successfully
+
+Wed Feb 02 18:24:19 IST 2022 | customer deleted successfully
+
+Wed Feb 02 18:24:30 IST 2022 | customer updated successfully
+
+Wed Feb 02 18:25:07 IST 2022 | customer added successfully
+
+Wed Feb 02 18:42:02 IST 2022 | coupon added successfully
+
+Wed Feb 02 19:47:44 IST 2022 | coupon purchased successfully
+
+Wed Feb 02 19:55:17 IST 2022 | company deleted successfully
+
+Wed Feb 02 20:36:06 IST 2022 | coupon purchased successfully
+
+Wed Feb 02 22:03:50 IST 2022 | coupon updated successfully
+
+Wed Feb 02 22:04:00 IST 2022 | coupon updated successfully
+
+Wed Feb 02 22:06:08 IST 2022 | coupon updated successfully
+
+Wed Feb 02 22:24:13 IST 2022 | company added successfully
+
+Wed Feb 02 22:24:19 IST 2022 | company deleted successfully
+
+Wed Feb 02 22:24:40 IST 2022 | company added successfully
+
+Wed Feb 02 22:36:50 IST 2022 | customer added successfully
+
+Wed Feb 02 22:36:54 IST 2022 | customer deleted successfully
+
+Wed Feb 02 22:37:50 IST 2022 | customer updated successfully
+
+Wed Feb 02 22:37:57 IST 2022 | customer updated successfully
+
+Wed Feb 02 22:43:48 IST 2022 | coupon added successfully
+
+Wed Feb 02 22:44:54 IST 2022 | coupon purchased successfully
+
+Thu Feb 03 00:31:15 IST 2022 | coupon updated successfully
+
+Thu Feb 03 00:31:34 IST 2022 | coupon deleted successfully
+
+Thu Feb 03 00:33:12 IST 2022 | coupon added successfully
+
+Thu Feb 03 00:33:22 IST 2022 | coupon updated successfully
+
+Sat Feb 05 15:43:23 IST 2022 | company deleted successfully
+
+Sat Feb 05 15:44:19 IST 2022 | customer updated successfully
+
+Sat Feb 05 15:53:19 IST 2022 | coupon added successfully
+
+Sat Feb 05 15:54:22 IST 2022 | coupon updated successfully
+
+Sat Feb 05 15:55:46 IST 2022 | coupon purchased successfully
+
+Sun Feb 06 14:47:17 IST 2022 | company added successfully
+
+Sun Feb 06 14:47:20 IST 2022 | company deleted successfully
+
+Sun Feb 06 15:30:49 IST 2022 | coupon added successfully
+
+Sun Feb 06 15:30:54 IST 2022 | coupon deleted successfully
+
+Sun Feb 06 15:31:30 IST 2022 | coupon added successfully
+
+Sun Feb 06 15:31:35 IST 2022 | coupon deleted successfully
+
+Sun Feb 06 15:32:14 IST 2022 | coupon added successfully
+
+Sun Feb 06 15:37:10 IST 2022 | coupon added successfully
+
+Sun Feb 06 15:37:50 IST 2022 | coupon deleted successfully
+
+Sun Feb 06 15:37:52 IST 2022 | coupon deleted successfully
+
+Sun Feb 06 15:38:30 IST 2022 | coupon added successfully
+
+Sun Feb 06 15:38:35 IST 2022 | coupon deleted successfully
+
+Sun Feb 06 15:40:23 IST 2022 | coupon added successfully
+
+Sun Feb 06 15:41:52 IST 2022 | coupon added successfully
+
+Sun Feb 06 15:42:24 IST 2022 | coupon deleted successfully
+
+Sun Feb 06 15:42:26 IST 2022 | coupon deleted successfully
+
+Sun Feb 06 15:43:11 IST 2022 | coupon added successfully
+
+Sun Feb 06 15:48:09 IST 2022 | coupon added successfully
+
+Sun Feb 06 15:48:18 IST 2022 | coupon deleted successfully
+
+Sun Feb 06 15:48:20 IST 2022 | coupon deleted successfully
+
+Sun Feb 06 23:18:57 IST 2022 | coupon added successfully
+
+Sun Feb 06 23:19:04 IST 2022 | coupon deleted successfully
+
+Sun Feb 06 23:20:58 IST 2022 | coupon added successfully
+
+Sun Feb 06 23:21:04 IST 2022 | coupon deleted successfully
+
+Sun Feb 06 23:21:16 IST 2022 | coupon added successfully
+
+Sun Feb 06 23:23:19 IST 2022 | coupon deleted successfully
+
+Mon Feb 07 00:38:51 IST 2022 | coupon purchased successfully
+
+Mon Feb 07 00:58:27 IST 2022 | customer added successfully
+
+Mon Feb 07 00:59:16 IST 2022 | coupon purchased successfully
+
+Wed Feb 09 11:04:20 IST 2022 | company updated successfully
+
+Wed Feb 09 11:05:57 IST 2022 | company updated successfully
+
+Wed Feb 09 11:06:04 IST 2022 | company updated successfully
+
+Wed Feb 09 11:06:24 IST 2022 | company updated successfully
+
+Wed Feb 09 11:06:34 IST 2022 | company updated successfully
+
+Wed Feb 09 11:06:46 IST 2022 | company updated successfully
+
+Wed Feb 09 11:13:09 IST 2022 | customer updated successfully
+
+Wed Feb 09 11:13:21 IST 2022 | customer updated successfully
+
+Wed Feb 09 11:14:02 IST 2022 | customer updated successfully
+
+Wed Feb 09 11:18:01 IST 2022 | coupon added successfully
+
+Wed Feb 09 11:18:05 IST 2022 | coupon deleted successfully
+
+Wed Feb 09 11:23:01 IST 2022 | coupon updated successfully
+
+Wed Feb 09 11:25:25 IST 2022 | coupon updated successfully
+
+Wed Feb 09 11:25:48 IST 2022 | coupon updated successfully
+
+Wed Feb 09 11:25:59 IST 2022 | coupon updated successfully
+
+Wed Feb 09 11:29:00 IST 2022 | coupon added successfully
+
+Wed Feb 09 11:32:01 IST 2022 | coupon updated successfully
+

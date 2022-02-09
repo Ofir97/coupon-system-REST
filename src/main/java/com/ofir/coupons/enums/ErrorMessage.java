@@ -3,6 +3,7 @@ package com.ofir.coupons.enums;
 public enum ErrorMessage {
 
 	COMPANY_NAME_OR_EMAIL_EXISTS("company name or email already exists."),
+	COMPANY_EMAIL_EXISTS("company email already exists."),
 	COMPANY_NAME_UPDATED("company name cannot be updated."),
 	COMPANY_NOT_FOUND("company does not exist."),
 	
@@ -15,8 +16,10 @@ public enum ErrorMessage {
 	COUPON_SOLD_OUT("coupon is sold out."),
 	COUPON_EXPIRED("coupon has expired."),
 	
-	BAD_LOGIN("LOGIN FAILED: bad credentials."),
-	INVALID_DATES("start date must be before end date.");
+	BAD_LOGIN("bad credentials: invalid email or password"),
+	INVALID_DATES("start date must be before end date."),
+	TOKEN_NOT_FOUND("token does not exist."),
+	TOKEN_NOT_AUTHORIZED("client is not authorized.");
 	
 	private String description;
 	

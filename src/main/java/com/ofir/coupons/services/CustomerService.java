@@ -8,8 +8,10 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 
 import com.ofir.coupons.annotations.LogOperation;
+import com.ofir.coupons.authorization.TokenManager;
 import com.ofir.coupons.beans.Coupon;
 import com.ofir.coupons.beans.Customer;
+import com.ofir.coupons.custom_exception.AuthorizationException;
 import com.ofir.coupons.custom_exception.CouponSystemException;
 import com.ofir.coupons.enums.Category;
 import com.ofir.coupons.enums.ErrorMessage;
@@ -26,23 +28,29 @@ public class CustomerService extends ClientService {
 
 	@Autowired
 	public CustomerService(CompaniesRepository companiesRepository, CustomersRepository customersRepository,
-			CouponsRepository couponsRepository) {
-		super(companiesRepository, customersRepository, couponsRepository);
+			CouponsRepository couponsRepository, TokenManager tokenManager) {
+		super(companiesRepository, customersRepository, couponsRepository, tokenManager);
 	}
 
 	/**
      * @param	email - the customer's email
      * @param	password - the customer's password
      * @return 	true if the email and password exist in customers table, otherwise false
+	 * @throws AuthorizationException 
      */
 	@Override
-	public boolean login(String email, String password) {
+	public String login(String email, String password) throws AuthorizationException {
 		Customer customer = customersRepository.findByEmailAndPassword(email, password); 
-		if (customer != null) { // if customer exists
-            customerID = customer.getId(); //sets customer id to the customer id that logged in.
-            return true;
-        } 
-        return false;
+		if (customer == null) 
+			throw new AuthorizationException(ErrorMessage.BAD_LOGIN);
+		
+        customerID = customer.getId(); //sets customer id to the customer id that logged in.
+        
+        return customer.getFirstName();
+	}
+	
+	public void logout(String token) {
+		tokenManager.removeToken(token);
 	}
 	
 	/**
@@ -112,5 +120,7 @@ public class CustomerService extends ClientService {
 	public Customer getCustomerDetails() {
 		return customersRepository.findById(customerID).orElse(null);
 	}
+	
+	
 
 }

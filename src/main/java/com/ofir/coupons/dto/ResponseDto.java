@@ -1,4 +1,4 @@
-package com.ofir.coupons.beans;
+package com.ofir.coupons.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

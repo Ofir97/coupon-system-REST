@@ -1,7 +1,7 @@
 package com.ofir.coupons.utils;
 
-import java.sql.Date;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.stereotype.Component;
@@ -18,12 +18,10 @@ import com.ofir.coupons.services.CustomerService;
 import lombok.RequiredArgsConstructor;
 
 @Component
-@RequiredArgsConstructor
 public class Test {
 
-	private final LoginManager loginManager;
-
 	public void testAll() {
+		
 		try {
 			testAdmin();
 			testCompany();

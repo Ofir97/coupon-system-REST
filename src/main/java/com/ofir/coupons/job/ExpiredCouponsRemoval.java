@@ -12,7 +12,7 @@ import lombok.RequiredArgsConstructor;
 
 @Component
 @RequiredArgsConstructor
-public class CouponExpirationDailyJob {
+public class ExpiredCouponsRemoval {
 
 	private final CouponsRepository couponsRepository;
 	private static final long TWENTY_FOUR_HOURS = 1000 * 60 * 60 * 24;

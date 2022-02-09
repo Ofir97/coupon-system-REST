@@ -10,5 +10,6 @@ import com.ofir.coupons.beans.Company;
 public interface CompaniesRepository extends JpaRepository<Company, Integer> {
 	boolean existsByNameOrEmail(String name, String email);
 	Company findByEmailAndPassword(String email, String password);
+	boolean existsByEmail(String email);
 	
 }

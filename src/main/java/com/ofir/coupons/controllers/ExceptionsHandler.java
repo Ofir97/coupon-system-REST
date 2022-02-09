@@ -11,8 +11,9 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
-import com.ofir.coupons.beans.ResponseDto;
+import com.ofir.coupons.custom_exception.AuthorizationException;
 import com.ofir.coupons.custom_exception.CouponSystemException;
+import com.ofir.coupons.dto.ResponseDto;
 import com.ofir.coupons.utils.Logger;
 
 import lombok.RequiredArgsConstructor;
@@ -25,8 +26,13 @@ public class ExceptionsHandler extends ResponseEntityExceptionHandler{
 	private String errMsg;
 	
 	@ExceptionHandler(CouponSystemException.class)
-	public ResponseEntity<?> handleCouponSystemException(Exception e) {
-		return new ResponseEntity<>(new ResponseDto(false, e.getMessage()), HttpStatus.OK);
+	public ResponseEntity<?> handleCouponSystemException(CouponSystemException e) {
+		return new ResponseEntity<>(new ResponseDto(false, e.getMessage()), HttpStatus.FORBIDDEN);
+	}
+	
+	@ExceptionHandler(AuthorizationException.class)
+	public ResponseEntity<?> handleAuthorizationException(AuthorizationException e) {
+		return new ResponseEntity<>(new ResponseDto(false, e.getMessage()), HttpStatus.UNAUTHORIZED);
 	}
 	
 	@Override // validation errors

@@ -1,21 +1,17 @@
-package com.ofir.coupons.beans;
+package com.ofir.coupons.dto;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
 
 import lombok.AllArgsConstructor;
-import lombok.Getter;
+import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
 
 @AllArgsConstructor
 @NoArgsConstructor
-@Getter
-@Setter
-@ToString
-public class LoginDetails {
+@Data
+public class LoginRequestDto {
 
 	@NotEmpty(message = "email cannot be empty.")
 	@Email(message = "email is invalid.")
