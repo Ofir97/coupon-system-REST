@@ -53,7 +53,7 @@ All that is required is to put @Repository above the interface declaration and t
 MySQL login details:
 
 - username: root
-- password: Ofiri0007!
+- password: master
 
 ---
 
